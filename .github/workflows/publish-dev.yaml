@@ -1,0 +1,87 @@
+name: Upload Python Package to TestPypi
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  POETRY_VERSION: "1.0.3"
+
+jobs:
+  tests:
+    name: ubuntu / ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [ 3.7 ]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Get full Python version
+        id: full-python-version
+        run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+        shell: bash
+
+      - name: Bootstrap poetry
+        shell: bash
+        run: |
+          python -m ensurepip
+          python -m pip install --upgrade pip
+          python -m pip install poetry
+      - name: Configure poetry
+        run: python -m poetry config virtualenvs.in-project true
+        shell: bash
+
+      - name: Set up cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Ensure cache is healthy
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: timeout 10s python -m poetry run pip --version || rm -rf .venv
+        shell: bash
+
+      - name: Install dependencies
+        run: poetry install
+        shell: bash
+
+      - name: Get current version
+        id: get_current_version
+        run: |
+          # Read the version from pyproject.toml and save it to current_version variable
+          echo "::set-output name=current_version::$(poetry version -s)"
+        shell: bash
+
+      - name: Get distance to this tag
+        id: get_distance_to_tag
+        run: |
+          # Get the distance from HEAD and save it to the distance variable
+          echo "::set-output name=distance::$(git rev-list HEAD --count)"
+        shell: bash
+
+      - name: Set version with poetry
+        id: set_poetry_version
+        run: |
+          # Update the pyproject.toml version. Versioning format for dev packages: X.Y.Z.devN
+          # For more information visit: https://www.python.org/dev/peps/pep-0440/#semantic-versioning
+          poetry version ${{ steps.get_current_version.outputs.current_version }}.dev${{ steps.get_distance_to_tag.outputs.distance }}
+        shell: bash
+
+      - name: Build and Publish package to TestPyPI
+        run: |
+          # set the repository to TestPyPI
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          # first build the project then publish to TestPyPI
+          poetry publish --build --repository testpypi --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }}
+        shell: bash

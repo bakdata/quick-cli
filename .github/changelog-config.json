@@ -1,0 +1,27 @@
+{
+  "documentation": {
+    "prefix": "**Documentation updates:**",
+    "labels": [
+      "documentation"
+    ]
+  },
+  "dependencies": {
+    "prefix": "**Updated dependencies:**",
+    "labels": [
+      "dependencies"
+    ]
+  },
+  "tests": {
+    "prefix": "**Testing:**",
+    "labels": [
+      "test"
+    ]
+  },
+  "integration": {
+    "prefix": "**(Continuous) Integration and Deployment:**",
+    "labels": [
+      "deployment",
+      "CI/CD"
+    ]
+  }
+}

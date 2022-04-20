@@ -1,0 +1,9 @@
+queries:
+  - name: "productInformation"
+    keyArgument: "product"
+    objectName: "information"
+    endpoints:
+      - topic: "purchases-count"
+        name: "purchasesCount"
+      - topic: "view-count"
+        name: "viewCount"

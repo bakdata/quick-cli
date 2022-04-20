@@ -1,0 +1,133 @@
+name: Upload Python Package to Pypi
+
+on:
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "Scope of the release; see https://python-poetry.org/docs/cli/#version"
+        required: false
+        default: "patch"
+
+jobs:
+  create-release:
+    runs-on: ubuntu-20.04
+    env:
+      PYTHON_VERSION: 3.7
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          ref: "master"
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Get full Python version
+        id: full-python-version
+        run: echo ::set-output name=version::$(python -c "import sys; print('-'.join(str(v) for v in sys.version_info))")
+        shell: bash
+
+      - name: Bootstrap poetry
+        shell: bash
+        run: |
+          python -m ensurepip
+          python -m pip install --upgrade pip
+          python -m pip install poetry
+      - name: Configure poetry
+        run: python -m poetry config virtualenvs.in-project true
+        shell: bash
+
+      - name: Set up cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Ensure cache is healthy
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: timeout 10s python -m poetry run pip --version || rm -rf .venv
+        shell: bash
+
+      - name: Install dependencies
+        run: poetry install
+        shell: bash
+
+      # Update the pyproject.toml version. Versioning format for dev packages: X.Y.Z
+      # For more information visit: https://www.python.org/dev/peps/pep-0440/#semantic-versioning
+      # https://python-poetry.org/docs/cli/#version
+      - name: Bump version with poetry
+        id: release-tag
+        run: |
+          echo ::set-output name=oldTag::$(poetry version -s)
+          poetry version ${{ github.event.inputs.scope }}
+          echo ::set-output name=tag::$(poetry version -s)
+        shell: bash
+
+      # For more information to create a commit with GitHub action bot go to:
+      # https://github.com/ad-m/github-push-action
+      - name: Commit pyproject.toml file
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Update version to ${{ steps.release-tag.outputs.tag }}" -a
+        shell: bash
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: refs/heads/master
+
+      - name: Create tag and push tag
+        run: |
+          git tag ${{ steps.release-tag.outputs.tag }}
+          git push origin ${{ steps.release-tag.outputs.tag }}
+        shell: bash
+
+      - name: Read changelog config
+        id: read-config
+        run: |
+          echo ::set-output name=content::$(cat ./.github/changelog-config.json)
+        shell: bash
+
+      - name: Generate Changelog
+        id: generate-release-changelog
+        uses: heinrichreimer/github-changelog-generator-action@v2.2
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          sinceTag: "${{ steps.release-tag.outputs.oldTag }}"
+          output: "changes.md"
+          stripGeneratorNotice: "true"
+          issues: "true"
+          unreleased: "true"
+          pullRequests: "false"
+          compareLink: "true"
+          issuesWoLabels: "false"
+          futureRelease: "${{ steps.release-tag.outputs.tag }}"
+          issuesLabel: "**Miscellaneous:**"
+          httpCache: "true"
+          verbose: "true"
+          addSections: |
+            ${{ steps.read-config.outputs.content }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "${{ steps.release-tag.outputs.tag }}"
+          name: Release v${{ steps.release-tag.outputs.tag }}
+          body: ${{ steps.generate-release-changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+      - name: Build and Publish package to PyPI
+        run: |
+          # first build the project then publish to PyPI
+          # If the repository is not specified, by default poetry pushes the packages to PyPI
+          poetry publish --build --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
+        shell: bash
