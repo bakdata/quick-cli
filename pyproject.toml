@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "quick-cli"
 description = "The CLI to control your quick cluster."
-version = "0.4.0"
+version = "0.5.0"
 authors = ["d9p <contact@d9p.io>"]
 license = "Apache-2.0"
 readme = "README.md"
