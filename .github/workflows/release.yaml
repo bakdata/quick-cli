@@ -129,5 +129,5 @@ jobs:
         run: |
           # first build the project then publish to PyPI
           # If the repository is not specified, by default poetry pushes the packages to PyPI
-          poetry publish --build --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
+          poetry publish --build --username __token__ --password ${{ secrets.PYPI_TOKEN }}
         shell: bash
