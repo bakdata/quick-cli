@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**get_applications**](DefaultApi.md#get_applications) | **GET** /applications | Retrieves all deployed quick applications
 [**get_avro_write_schema**](DefaultApi.md#get_avro_write_schema) | **GET** /gateway/{name}/schema/{type}/avro | Returns the Gateway schema in Avro format
 [**get_gateway**](DefaultApi.md#get_gateway) | **GET** /gateway/{name} | Retrieves information about a gateway
-[**get_graphql_write_schema**](DefaultApi.md#get_graphql_write_schema) | **GET** /gateway/{name}/schema/{type}/graphql | Returns the Gatewy schema in GraphQL format
+[**get_graphql_write_schema**](DefaultApi.md#get_graphql_write_schema) | **GET** /gateway/{name}/schema/{type}/graphql | Returns the Gateway schema in GraphQL format
 [**get_topic_information**](DefaultApi.md#get_topic_information) | **GET** /topic/{name} | Gets information about a topic
 [**list_all_gateways**](DefaultApi.md#list_all_gateways) | **GET** /gateways | List all deployed gateways
 [**list_all_topics**](DefaultApi.md#list_all_topics) | **GET** /topics | List all registered topic
@@ -1021,7 +1021,7 @@ Name | Type | Description  | Notes
 # **get_graphql_write_schema**
 > SchemaData get_graphql_write_schema(name, type)
 
-Returns the Gatewy schema in GraphQL format
+Returns the Gateway schema in GraphQL format
 
 ### Example
 
@@ -1061,7 +1061,7 @@ with quick_client.ApiClient(configuration) as api_client:
 type = 'type_example' # str | The type used in the schema of the gateway
 
     try:
-        # Returns the Gatewy schema in GraphQL format
+        # Returns the Gateway schema in GraphQL format
         api_response = api_instance.get_graphql_write_schema(name, type)
         pprint(api_response)
     except ApiException as e:

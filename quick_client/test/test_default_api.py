@@ -122,7 +122,7 @@ class TestDefaultApi(unittest.TestCase):
     def test_get_graphql_write_schema(self):
         """Test case for get_graphql_write_schema
 
-        Returns the Gatewy schema in GraphQL format  # noqa: E501
+        Returns the Gateway schema in GraphQL format  # noqa: E501
         """
         pass
 

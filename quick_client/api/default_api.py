@@ -1537,7 +1537,7 @@ class DefaultApi(object):
             collection_formats=collection_formats)
 
     def get_graphql_write_schema(self, name, type, **kwargs):  # noqa: E501
-        """Returns the Gatewy schema in GraphQL format  # noqa: E501
+        """Returns the Gateway schema in GraphQL format  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1562,7 +1562,7 @@ class DefaultApi(object):
         return self.get_graphql_write_schema_with_http_info(name, type, **kwargs)  # noqa: E501
 
     def get_graphql_write_schema_with_http_info(self, name, type, **kwargs):  # noqa: E501
-        """Returns the Gatewy schema in GraphQL format  # noqa: E501
+        """Returns the Gateway schema in GraphQL format  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

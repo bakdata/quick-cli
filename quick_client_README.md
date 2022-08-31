@@ -90,7 +90,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**get_applications**](quick_client/docs/DefaultApi.md#get_applications) | **GET** /applications | Retrieves all deployed quick applications
 *DefaultApi* | [**get_avro_write_schema**](quick_client/docs/DefaultApi.md#get_avro_write_schema) | **GET** /gateway/{name}/schema/{type}/avro | Returns the Gateway schema in Avro format
 *DefaultApi* | [**get_gateway**](quick_client/docs/DefaultApi.md#get_gateway) | **GET** /gateway/{name} | Retrieves information about a gateway
-*DefaultApi* | [**get_graphql_write_schema**](quick_client/docs/DefaultApi.md#get_graphql_write_schema) | **GET** /gateway/{name}/schema/{type}/graphql | Returns the Gatewy schema in GraphQL format
+*DefaultApi* | [**get_graphql_write_schema**](quick_client/docs/DefaultApi.md#get_graphql_write_schema) | **GET** /gateway/{name}/schema/{type}/graphql | Returns the Gateway schema in GraphQL format
 *DefaultApi* | [**get_topic_information**](quick_client/docs/DefaultApi.md#get_topic_information) | **GET** /topic/{name} | Gets information about a topic
 *DefaultApi* | [**list_all_gateways**](quick_client/docs/DefaultApi.md#list_all_gateways) | **GET** /gateways | List all deployed gateways
 *DefaultApi* | [**list_all_topics**](quick_client/docs/DefaultApi.md#list_all_topics) | **GET** /topics | List all registered topic
