@@ -1,4 +1,4 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, BooleanOptionalAction
 
 import isodate
 
@@ -53,6 +53,11 @@ class CreateTopic(ManagerCommand):
             isodate.parse_duration(self.args.retention_time)
             creation_data.retention_time = self.args.retention_time
 
+        creation_data.point = self.args.point
+
+        if self.args.range_field is not None:
+            creation_data.range_field = self.args.range_field
+
         params["topic_creation_data"] = creation_data
         self.client.create_new_topic(self.args.topic_name, **params)
         print(f"Created new topic {self.args.topic_name}")
@@ -97,11 +102,26 @@ class CreateTopic(ManagerCommand):
             dest="immutable",
             action="store_true",
             help="An immutable topic does not allow ingesting the same key twice (default: False)",
+            required=False,
         )
         optional.add_argument(
             "--retention-time",
             type=str,
             help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
+            required=False,
+        )
+        optional.add_argument(
+            "--point",
+            help="If a point index should be built in a mirror (default is true)",
+            action=BooleanOptionalAction,
+            default=True
+        )
+        optional.add_argument(
+            "--range",
+            type=str,
+            dest="range_field",
+            help="The field name, which the range index should be built on",
+            required=False,
         )
 
 

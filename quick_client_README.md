@@ -88,7 +88,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**deploy_application**](quick_client/docs/DefaultApi.md#deploy_application) | **POST** /application | Deploys a new application
 *DefaultApi* | [**get_application_information**](quick_client/docs/DefaultApi.md#get_application_information) | **GET** /application/{name} | Retrieves information about the given application
 *DefaultApi* | [**get_applications**](quick_client/docs/DefaultApi.md#get_applications) | **GET** /applications | Retrieves all deployed quick applications
-*DefaultApi* | [**get_avro_write_schema**](quick_client/docs/DefaultApi.md#get_avro_write_schema) | **GET** /gateway/{name}/schema/{type}/avro | Returns the Gatewy schema in Avro format
+*DefaultApi* | [**get_avro_write_schema**](quick_client/docs/DefaultApi.md#get_avro_write_schema) | **GET** /gateway/{name}/schema/{type}/avro | Returns the Gateway schema in Avro format
 *DefaultApi* | [**get_gateway**](quick_client/docs/DefaultApi.md#get_gateway) | **GET** /gateway/{name} | Retrieves information about a gateway
 *DefaultApi* | [**get_graphql_write_schema**](quick_client/docs/DefaultApi.md#get_graphql_write_schema) | **GET** /gateway/{name}/schema/{type}/graphql | Returns the Gatewy schema in GraphQL format
 *DefaultApi* | [**get_topic_information**](quick_client/docs/DefaultApi.md#get_topic_information) | **GET** /topic/{name} | Gets information about a topic
