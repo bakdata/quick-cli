@@ -47,7 +47,7 @@ class CreateGateway(ManagerCommand):
             help="Docker image tag (defaults to currently installed tag)",
             required=False,
         )
-        required.add_argument(
+        optional.add_argument(
             "-s",
             "--schema",
             dest="schema",
