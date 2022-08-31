@@ -1,4 +1,5 @@
-from argparse import ArgumentParser, BooleanOptionalAction
+from argparse import ArgumentParser
+from argparse import BooleanOptionalAction
 
 import isodate
 
@@ -114,7 +115,7 @@ class CreateTopic(ManagerCommand):
             "--point",
             help="If a point index should be built in a mirror (default is true)",
             action=BooleanOptionalAction,
-            default=True
+            default=True,
         )
         optional.add_argument(
             "--range",

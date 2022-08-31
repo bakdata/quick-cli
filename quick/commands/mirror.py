@@ -1,4 +1,5 @@
-from argparse import ArgumentParser, BooleanOptionalAction
+from argparse import ArgumentParser
+from argparse import BooleanOptionalAction
 
 from quick_client import ApiException
 from quick_client import MirrorCreationData
@@ -51,10 +52,15 @@ class CreateMirror(ManagerCommand):
             "--point",
             help="If a point index should be built in a mirror (default is true)",
             action=BooleanOptionalAction,
-            default=True
+            default=True,
+            required=False,
         )
         optional.add_argument(
-            "--range", type=str, dest="range_field", help="The field name, which the range index should be built on"
+            "--range",
+            type=str,
+            dest="range_field",
+            help="The field name, which the range index should be built on",
+            required=False,
         )
 
 
