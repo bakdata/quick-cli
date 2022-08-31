@@ -48,9 +48,20 @@ class CreateMirror(ManagerCommand):
             default=1,
         )
         # TODO: Python 3.9+ supports BooleanOptionalAction https://stackoverflow.com/a/15008806
-        optional.add_argument("--point", action="store_true", default=True)
-        optional.add_argument("--no-point", dest="point", action="store_false")
-
+        optional.add_argument(
+            "--point",
+            dest="point",
+            action="store_true",
+            help="Creates point index in the Mirror",
+            default=True,
+        )
+        optional.add_argument(
+            "--no-point",
+            dest="point",
+            action="store_false",
+            help="Disables point index in the Mirror",
+        )
+        optional.set_defaults(point=True)
         optional.add_argument(
             "--range",
             type=str,
