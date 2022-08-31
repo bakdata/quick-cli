@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-from argparse import BooleanOptionalAction
 
 import isodate
 
@@ -111,12 +110,9 @@ class CreateTopic(ManagerCommand):
             help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
             required=False,
         )
-        optional.add_argument(
-            "--point",
-            help="If a point index should be built in a mirror (default is true)",
-            action=BooleanOptionalAction,
-            default=True,
-        )
+        # TODO: Python 3.9+ supports BooleanOptionalAction https://stackoverflow.com/a/15008806
+        optional.add_argument("--point", action="store_true", default=True)
+        optional.add_argument("--no-point", dest="point", action="store_false")
         optional.add_argument(
             "--range",
             type=str,

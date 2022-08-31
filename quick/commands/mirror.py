@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-from argparse import BooleanOptionalAction
 
 from quick_client import ApiException
 from quick_client import MirrorCreationData
@@ -48,13 +47,10 @@ class CreateMirror(ManagerCommand):
             required=False,
             default=1,
         )
-        optional.add_argument(
-            "--point",
-            help="If a point index should be built in a mirror (default is true)",
-            action=BooleanOptionalAction,
-            default=True,
-            required=False,
-        )
+        # TODO: Python 3.9+ supports BooleanOptionalAction https://stackoverflow.com/a/15008806
+        optional.add_argument("--point", action="store_true", default=True)
+        optional.add_argument("--no-point", dest="point", action="store_false")
+
         optional.add_argument(
             "--range",
             type=str,
