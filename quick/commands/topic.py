@@ -54,9 +54,7 @@ class CreateTopic(ManagerCommand):
             creation_data.retention_time = self.args.retention_time
 
         creation_data.point = self.args.point
-
-        if self.args.range_field is not None:
-            creation_data.range_field = self.args.range_field
+        creation_data.range_field = self.args.range_field
 
         params["topic_creation_data"] = creation_data
         self.client.create_new_topic(self.args.topic_name, **params)
@@ -110,7 +108,6 @@ class CreateTopic(ManagerCommand):
             help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
             required=False,
         )
-        # TODO: Python 3.9+ supports BooleanOptionalAction https://stackoverflow.com/a/15008806
         optional.add_argument(
             "--point",
             dest="point",
@@ -125,7 +122,7 @@ class CreateTopic(ManagerCommand):
             help="Disables point index in the Mirror",
         )
         optional.add_argument(
-            "--range",
+            "--rangeField",
             type=str,
             dest="range_field",
             help="The field name, which the range index should be built on",
