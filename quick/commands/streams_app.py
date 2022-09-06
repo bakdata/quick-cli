@@ -63,20 +63,21 @@ class DeployStreamsApp(ManagerCommand):
             metavar="REPLICAS",
             type=int,
             help="Number of replicas",
-            required=False,
             default=1,
         )
         optional.add_argument(
             "--args",
             dest="props",
             metavar="ARG=VALUE",
-            required=False,
             action=ArgsAction,
             nargs="*",
             help="CLI arguments of the application (broker and schema registry not required)",
         )
         optional.add_argument(
-            "--port", metavar="PORT", type=int, help="The container port of the application", required=False
+            "--port",
+            metavar="PORT",
+            type=int,
+            help="The container port of the application",
         )
 
 
