@@ -36,7 +36,6 @@ class CreateMirror(ManagerCommand):
             metavar="TAG",
             type=str,
             help="Docker image tag (defaults to currently installed tag)",
-            required=False,
         )
         optional.add_argument(
             "--replicas",
@@ -44,7 +43,6 @@ class CreateMirror(ManagerCommand):
             metavar="REPLICAS",
             type=int,
             help="Number of replicas (default: 1)",
-            required=False,
             default=1,
         )
         optional.add_argument(
@@ -65,7 +63,6 @@ class CreateMirror(ManagerCommand):
             type=str,
             dest="range_field",
             help="The field name, which the range index should be built on",
-            required=False,
         )
 
 

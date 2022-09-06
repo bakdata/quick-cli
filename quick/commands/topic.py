@@ -100,13 +100,11 @@ class CreateTopic(ManagerCommand):
             dest="immutable",
             action="store_true",
             help="An immutable topic does not allow ingesting the same key twice (default: False)",
-            required=False,
         )
         optional.add_argument(
             "--retention-time",
             type=str,
             help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
-            required=False,
         )
         optional.add_argument(
             "--point",
@@ -126,7 +124,6 @@ class CreateTopic(ManagerCommand):
             type=str,
             dest="range_field",
             help="The field name, which the range index should be built on",
-            required=False,
         )
 
 
