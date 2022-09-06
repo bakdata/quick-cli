@@ -53,6 +53,9 @@ class CreateTopic(ManagerCommand):
             isodate.parse_duration(self.args.retention_time)
             creation_data.retention_time = self.args.retention_time
 
+        creation_data.point = self.args.point
+        creation_data.range_field = self.args.range_field
+
         params["topic_creation_data"] = creation_data
         self.client.create_new_topic(self.args.topic_name, **params)
         print(f"Created new topic {self.args.topic_name}")
@@ -102,6 +105,25 @@ class CreateTopic(ManagerCommand):
             "--retention-time",
             type=str,
             help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
+        )
+        optional.add_argument(
+            "--point",
+            dest="point",
+            action="store_true",
+            help="Creates point index in the Mirror",
+            default=True,
+        )
+        optional.add_argument(
+            "--no-point",
+            dest="point",
+            action="store_false",
+            help="Disables point index in the Mirror",
+        )
+        optional.add_argument(
+            "--range-field",
+            type=str,
+            dest="range_field",
+            help="The field name, which the range index should be built on",
         )
 
 

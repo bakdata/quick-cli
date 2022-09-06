@@ -132,6 +132,33 @@ class TestTopic(TestCase):
         self.assertEqual(cm.exception.code, 2)
         self.assertTrue("Error: the following arguments are required: -k/--key-type, -v/--value-type" in f.getvalue())
 
+    def test_execute_range(self):
+        creation_data = TopicCreationData(
+            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, point=False, range_field="testField"
+        )
+
+        args = self.parser.parse_args(
+            [
+                "topic",
+                self.COMMAND,
+                self.NAME,
+                self.KEY_CMD,
+                self.KEY_TYPE,
+                self.VALUE_CMD,
+                self.VALUE_TYPE,
+                self.SCHEMA_CMD,
+                self.SCHEMA,
+                "--no-point",
+                "--range-field",
+                "testField",
+            ]
+        )
+        args.func(args)
+
+        self.mock_client.create_new_topic.assert_called_once_with(
+            "test-topic", key_type=self.KEY_TYPE, topic_creation_data=creation_data, value_type="schema"
+        )
+
 
 class TestDelete(TestCase):
     COMMAND = "delete"

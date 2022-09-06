@@ -15,7 +15,12 @@ class CreateMirror(ManagerCommand):
 
     def execute(self):
         mirror_creation_data = MirrorCreationData(
-            name=self.args.topic, topic_name=self.args.topic, replicas=self.args.replicas, tag=self.args.tag
+            name=self.args.topic,
+            topic_name=self.args.topic,
+            replicas=self.args.replicas,
+            tag=self.args.tag,
+            point=self.args.point,
+            range_field=self.args.range_field,
         )
         self.client.create_mirror(mirror_creation_data=mirror_creation_data)
         print(f"Create mirror for topic {self.args.topic} (this may take a few seconds)")
@@ -31,7 +36,6 @@ class CreateMirror(ManagerCommand):
             metavar="TAG",
             type=str,
             help="Docker image tag (defaults to currently installed tag)",
-            required=False,
         )
         optional.add_argument(
             "--replicas",
@@ -39,8 +43,26 @@ class CreateMirror(ManagerCommand):
             metavar="REPLICAS",
             type=int,
             help="Number of replicas (default: 1)",
-            required=False,
             default=1,
+        )
+        optional.add_argument(
+            "--point",
+            dest="point",
+            action="store_true",
+            help="Creates point index in the Mirror",
+            default=True,
+        )
+        optional.add_argument(
+            "--no-point",
+            dest="point",
+            action="store_false",
+            help="Disables point index in the Mirror",
+        )
+        optional.add_argument(
+            "--range-field",
+            type=str,
+            dest="range_field",
+            help="The field name, which the range index should be built on",
         )
 
 

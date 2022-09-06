@@ -31,7 +31,6 @@ class CreateContext(Command):
             dest="host",
             type=str,
             help="Name of the host (prompted if not given)",
-            required=False,
         )
         optional.add_argument(
             "--key",
@@ -39,13 +38,11 @@ class CreateContext(Command):
             metavar="API-KEY",
             type=str,
             help="API key of this quick instance (prompted if not given)",
-            required=False,
         )
         optional.add_argument(
             "--context",
             type=str,
             help="Name of the context (defaults to host)",
-            required=False,
         )
 
 

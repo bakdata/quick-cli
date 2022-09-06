@@ -38,23 +38,20 @@ class CreateGateway(ManagerCommand):
             metavar="REPLICAS",
             type=int,
             help="Number of replicas",
-            required=False,
         )
         optional.add_argument(
             "--tag",
             metavar="TAG",
             type=str,
             help="Docker image tag (defaults to currently installed tag)",
-            required=False,
         )
-        required.add_argument(
+        optional.add_argument(
             "-s",
             "--schema",
             dest="schema",
             metavar="SCHEMA_FILE",
             type=FileType("r"),
             help="Location of the schema file or std in",
-            required=False,
         )
 
 

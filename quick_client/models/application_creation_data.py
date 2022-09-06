@@ -39,6 +39,7 @@ class ApplicationCreationData(object):
         'tag': 'str',
         'replicas': 'int',
         'port': 'int',
+        'image_pull_secret': 'str',
         'arguments': 'ApplicationCreationDataArguments'
     }
 
@@ -49,10 +50,11 @@ class ApplicationCreationData(object):
         'tag': 'tag',
         'replicas': 'replicas',
         'port': 'port',
+        'image_pull_secret': 'imagePullSecret',
         'arguments': 'arguments'
     }
 
-    def __init__(self, name=None, registry=None, image_name=None, tag=None, replicas=None, port=None, arguments=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, name=None, registry=None, image_name=None, tag=None, replicas=None, port=None, image_pull_secret=None, arguments=None, local_vars_configuration=None):  # noqa: E501
         """ApplicationCreationData - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -64,6 +66,7 @@ class ApplicationCreationData(object):
         self._tag = None
         self._replicas = None
         self._port = None
+        self._image_pull_secret = None
         self._arguments = None
         self.discriminator = None
 
@@ -75,6 +78,8 @@ class ApplicationCreationData(object):
             self.replicas = replicas
         if port is not None:
             self.port = port
+        if image_pull_secret is not None:
+            self.image_pull_secret = image_pull_secret
         if arguments is not None:
             self.arguments = arguments
 
@@ -211,6 +216,27 @@ class ApplicationCreationData(object):
         """
 
         self._port = port
+
+    @property
+    def image_pull_secret(self):
+        """Gets the image_pull_secret of this ApplicationCreationData.  # noqa: E501
+
+
+        :return: The image_pull_secret of this ApplicationCreationData.  # noqa: E501
+        :rtype: str
+        """
+        return self._image_pull_secret
+
+    @image_pull_secret.setter
+    def image_pull_secret(self, image_pull_secret):
+        """Sets the image_pull_secret of this ApplicationCreationData.
+
+
+        :param image_pull_secret: The image_pull_secret of this ApplicationCreationData.  # noqa: E501
+        :type: str
+        """
+
+        self._image_pull_secret = image_pull_secret
 
     @property
     def arguments(self):
