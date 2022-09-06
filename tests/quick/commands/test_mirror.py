@@ -29,7 +29,7 @@ class TestDelete(TestCase):
 
 class TestMirror(TestCase):
     COMMAND = "create"
-    OPTIONAL = ["--replicas", "--tag", "--point", "--range"]
+    OPTIONAL = ["--replicas", "--tag", "--point", "--range-field"]
     TOPIC = "test_topic"
     REPLICAS = 3
     VERSION = "test_version"

@@ -122,7 +122,7 @@ class CreateTopic(ManagerCommand):
             help="Disables point index in the Mirror",
         )
         optional.add_argument(
-            "--rangeField",
+            "--range-field",
             type=str,
             dest="range_field",
             help="The field name, which the range index should be built on",

@@ -149,7 +149,7 @@ class TestTopic(TestCase):
                 self.SCHEMA_CMD,
                 self.SCHEMA,
                 "--no-point",
-                "--range",
+                "--range-field",
                 "testField",
             ]
         )
