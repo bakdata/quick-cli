@@ -12,13 +12,15 @@ from tests.quick.commands.util import create_command_in_hierarchy
 
 class TestDeploy(TestCase):
     COMMAND = "deploy"
-    OPTIONAL = ["--args", "--replicas"]
+    OPTIONAL = ["--args", "--replicas", "--image-pull-secret"]
     NAME = "test_app"
     REGISTRY = "https://hub.docker.com/"
+    PRIVATE_REGISTRY = "https://hub.docker.com/"
     IMAGE = "test_image"
     REPLICAS = 3
     PORT = 8080
     TAG = "test_tag"
+    PULL_SECRET = "secret"
     ARGS = {
         "input-topics": "purchase-topic",
         "output-topic": "purchases-count",
@@ -135,6 +137,39 @@ class TestDeploy(TestCase):
             registry=self.REGISTRY,
             image_name=self.IMAGE,
             tag=self.TAG,
+            replicas=1,
+            port=self.PORT,
+            arguments={},
+        )
+
+        self.mock_client.deploy_application.assert_called_once_with(application_creation_data=expected)
+
+    def test_execute_deploy_application_with_image_pull_secret(self):
+        args = self.parser.parse_args(
+            [
+                "app",
+                self.COMMAND,
+                self.NAME,
+                "--image",
+                self.IMAGE,
+                "--registry",
+                self.PRIVATE_REGISTRY,
+                "--tag",
+                self.TAG,
+                "--image-pull-secret",
+                self.PULL_SECRET,
+                "--port",
+                str(self.PORT),
+            ]
+        )
+        args.func(args)
+
+        expected = ApplicationCreationData(
+            name=self.NAME,
+            registry=self.REGISTRY,
+            image_name=self.IMAGE,
+            tag=self.TAG,
+            image_pull_secret=self.PULL_SECRET,
             replicas=1,
             port=self.PORT,
             arguments={},
