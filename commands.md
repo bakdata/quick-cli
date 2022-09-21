@@ -162,8 +162,8 @@ Create a new topic
 **Usage:**
 
 ```
-quick topic create [-h] -k TYPE -v TYPE [-s SCHEMA] [--immutable] [--retention-time RETENTION_TIME] [--point]
-                          [--no-point] [--range-field RANGE_FIELD] [--context CONTEXT] [--debug]
+quick topic create [-h] -k TYPE -v TYPE [-s SCHEMA] [--immutable] [--retention-time RETENTION_TIME]
+                          [--range-field RANGE_FIELD] [--context CONTEXT] [--debug]
                           NAME
 ```
 **options:**
@@ -181,8 +181,6 @@ quick topic create [-h] -k TYPE -v TYPE [-s SCHEMA] [--immutable] [--retention-t
 * `-s, --schema`: The schema of the topic defined by gateway's GraphQL type: gateway.type
 * `--immutable`: An immutable topic does not allow ingesting the same key twice (default: False)
 * `--retention-time`: Retention time of data in the topic in (if not given, the data is kept indefinitely)
-* `--point`: Creates point index in the Mirror
-* `--no-point`: Disables point index in the Mirror
 * `--range-field`: The field name, which the range index should be built on
 * `--context`: Context of quick
 * `--debug`: Enable debug output
@@ -420,8 +418,8 @@ Create a mirror for a topic and make it queryable through a gateway
 **Usage:**
 
 ```
-quick mirror create [-h] [--tag TAG] [--replicas REPLICAS] [--point] [--no-point] [--range-field RANGE_FIELD]
-                           [--context CONTEXT] [--debug]
+quick mirror create [-h] [--tag TAG] [--replicas REPLICAS] [--range-field RANGE_FIELD] [--context CONTEXT]
+                           [--debug]
                            TOPIC
 ```
 **options:**
@@ -436,8 +434,6 @@ quick mirror create [-h] [--tag TAG] [--replicas REPLICAS] [--point] [--no-point
 
 * `--tag`: Docker image tag (defaults to currently installed tag)
 * `--replicas`: Number of replicas (default: 1)
-* `--point`: Creates point index in the Mirror
-* `--no-point`: Disables point index in the Mirror
 * `--range-field`: The field name, which the range index should be built on
 * `--context`: Context of quick
 * `--debug`: Enable debug output

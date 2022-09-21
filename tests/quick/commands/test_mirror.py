@@ -29,7 +29,7 @@ class TestDelete(TestCase):
 
 class TestMirror(TestCase):
     COMMAND = "create"
-    OPTIONAL = ["--replicas", "--tag", "--point", "--range-field"]
+    OPTIONAL = ["--replicas", "--tag", "--range-field"]
     TOPIC = "test_topic"
     REPLICAS = 3
     VERSION = "test_version"
@@ -72,12 +72,11 @@ class TestMirror(TestCase):
                 self.OPTIONAL[1],
                 self.VERSION,
                 self.OPTIONAL[2],
-                self.OPTIONAL[3],
                 self.RANGE_FILED,
             ]
         )
         args.func(args)
         expected_data = MirrorCreationData(
-            self.TOPIC, self.TOPIC, replicas=self.REPLICAS, tag=self.VERSION, point=True, range_field=self.RANGE_FILED
+            self.TOPIC, self.TOPIC, replicas=self.REPLICAS, tag=self.VERSION, range_field=self.RANGE_FILED
         )
         self.mock_client.create_mirror.assert_called_once_with(mirror_creation_data=expected_data)

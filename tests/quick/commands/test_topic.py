@@ -134,7 +134,7 @@ class TestTopic(TestCase):
 
     def test_execute_range(self):
         creation_data = TopicCreationData(
-            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, point=False, range_field="testField"
+            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, range_field="testField"
         )
 
         args = self.parser.parse_args(
@@ -148,7 +148,6 @@ class TestTopic(TestCase):
                 self.VALUE_TYPE,
                 self.SCHEMA_CMD,
                 self.SCHEMA,
-                "--no-point",
                 "--range-field",
                 "testField",
             ]
