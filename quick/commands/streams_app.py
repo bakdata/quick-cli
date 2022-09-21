@@ -65,7 +65,7 @@ class DeployStreamsApp(ManagerCommand):
             "--image-pull-secret",
             metavar="IMAGE_PULL_SECRET",
             type=str,
-            help="A secret for pulling an image from a private registry",
+            help="A secret in a string format for pulling an image from a private registry",
         )
         optional.add_argument(
             "--replicas",
