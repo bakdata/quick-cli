@@ -48,6 +48,8 @@ class CreateTopic(ManagerCommand):
 
             creation_data.value_schema = GatewaySchema(splits[0], splits[1])
 
+        if self.args.retention_time is not None and self.args.range_field is not None:
+            self.parser.error("The --range-field option must not be specified" + " when --retention-time is set")
         if self.args.retention_time is not None:
             # check for correct formatting
             isodate.parse_duration(self.args.retention_time)
