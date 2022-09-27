@@ -48,12 +48,13 @@ class CreateTopic(ManagerCommand):
 
             creation_data.value_schema = GatewaySchema(splits[0], splits[1])
 
+        if self.args.retention_time is not None and self.args.range_field is not None:
+            self.parser.error("The --range-field option must not be specified" + " when --retention-time is set")
         if self.args.retention_time is not None:
             # check for correct formatting
             isodate.parse_duration(self.args.retention_time)
             creation_data.retention_time = self.args.retention_time
 
-        creation_data.point = self.args.point
         creation_data.range_field = self.args.range_field
 
         params["topic_creation_data"] = creation_data
@@ -105,19 +106,6 @@ class CreateTopic(ManagerCommand):
             "--retention-time",
             type=str,
             help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
-        )
-        optional.add_argument(
-            "--point",
-            dest="point",
-            action="store_true",
-            help="Creates point index in the Mirror",
-            default=True,
-        )
-        optional.add_argument(
-            "--no-point",
-            dest="point",
-            action="store_false",
-            help="Disables point index in the Mirror",
         )
         optional.add_argument(
             "--range-field",

@@ -19,7 +19,6 @@ class CreateMirror(ManagerCommand):
             topic_name=self.args.topic,
             replicas=self.args.replicas,
             tag=self.args.tag,
-            point=self.args.point,
             range_field=self.args.range_field,
         )
         self.client.create_mirror(mirror_creation_data=mirror_creation_data)
@@ -44,19 +43,6 @@ class CreateMirror(ManagerCommand):
             type=int,
             help="Number of replicas (default: 1)",
             default=1,
-        )
-        optional.add_argument(
-            "--point",
-            dest="point",
-            action="store_true",
-            help="Creates point index in the Mirror",
-            default=True,
-        )
-        optional.add_argument(
-            "--no-point",
-            dest="point",
-            action="store_false",
-            help="Disables point index in the Mirror",
         )
         optional.add_argument(
             "--range-field",

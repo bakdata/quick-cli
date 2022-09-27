@@ -134,7 +134,7 @@ class TestTopic(TestCase):
 
     def test_execute_range(self):
         creation_data = TopicCreationData(
-            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, point=False, range_field="testField"
+            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, range_field="testField"
         )
 
         args = self.parser.parse_args(
@@ -148,7 +148,6 @@ class TestTopic(TestCase):
                 self.VALUE_TYPE,
                 self.SCHEMA_CMD,
                 self.SCHEMA,
-                "--no-point",
                 "--range-field",
                 "testField",
             ]
@@ -158,6 +157,30 @@ class TestTopic(TestCase):
         self.mock_client.create_new_topic.assert_called_once_with(
             "test-topic", key_type=self.KEY_TYPE, topic_creation_data=creation_data, value_type="schema"
         )
+
+    def test_execute_with_both_range_field_and_retention_time(self):
+        args = self.parser.parse_args(
+            [
+                "topic",
+                self.COMMAND,
+                self.NAME,
+                self.KEY_CMD,
+                self.KEY_TYPE,
+                self.VALUE_CMD,
+                self.VALUE_TYPE,
+                self.SCHEMA_CMD,
+                self.SCHEMA,
+                "--range-field",
+                "testField",
+                "--retention-time",
+                "PT5M",
+            ]
+        )
+        f = io.StringIO()
+        with self.assertRaises(SystemExit) as cm, contextlib.redirect_stderr(f):
+            args.func(args)
+        self.assertEqual(cm.exception.code, 2)
+        self.assertTrue("The --range-field option must not be specified when --retention-time is set" in f.getvalue())
 
 
 class TestDelete(TestCase):

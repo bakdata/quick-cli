@@ -38,7 +38,6 @@ class MirrorCreationData(object):
         'replicas': 'int',
         'tag': 'str',
         'retention_time': 'str',
-        'point': 'bool',
         'range_field': 'str'
     }
 
@@ -48,11 +47,10 @@ class MirrorCreationData(object):
         'replicas': 'replicas',
         'tag': 'tag',
         'retention_time': 'retentionTime',
-        'point': 'point',
         'range_field': 'rangeField'
     }
 
-    def __init__(self, name=None, topic_name=None, replicas=None, tag=None, retention_time=None, point=True, range_field=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, name=None, topic_name=None, replicas=None, tag=None, retention_time=None, range_field=None, local_vars_configuration=None):  # noqa: E501
         """MirrorCreationData - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -63,7 +61,6 @@ class MirrorCreationData(object):
         self._replicas = None
         self._tag = None
         self._retention_time = None
-        self._point = None
         self._range_field = None
         self.discriminator = None
 
@@ -75,8 +72,6 @@ class MirrorCreationData(object):
             self.tag = tag
         if retention_time is not None:
             self.retention_time = retention_time
-        if point is not None:
-            self.point = point
         if range_field is not None:
             self.range_field = range_field
 
@@ -188,27 +183,6 @@ class MirrorCreationData(object):
         """
 
         self._retention_time = retention_time
-
-    @property
-    def point(self):
-        """Gets the point of this MirrorCreationData.  # noqa: E501
-
-
-        :return: The point of this MirrorCreationData.  # noqa: E501
-        :rtype: bool
-        """
-        return self._point
-
-    @point.setter
-    def point(self, point):
-        """Sets the point of this MirrorCreationData.
-
-
-        :param point: The point of this MirrorCreationData.  # noqa: E501
-        :type: bool
-        """
-
-        self._point = point
 
     @property
     def range_field(self):
