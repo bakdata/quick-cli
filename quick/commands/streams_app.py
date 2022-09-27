@@ -17,6 +17,8 @@ class DeployStreamsApp(ManagerCommand):
         "\n"
         "The application must be provided as a Docker image. "
         "You can specify the registry."
+        "You can also deploy the application from a private registry. If you want to do this, you must specify the "
+        "corresponding image pull secret."
     )
 
     def client_error_message(self, exception: ApiException) -> str:
@@ -30,6 +32,7 @@ class DeployStreamsApp(ManagerCommand):
             registry=self.args.registry,
             image_name=self.args.image,
             tag=self.args.tag,
+            image_pull_secret=self.args.image_pull_secret,
             replicas=self.args.replicas,
             port=self.args.port,
             arguments=arguments,
@@ -57,6 +60,12 @@ class DeployStreamsApp(ManagerCommand):
             type=str,
             help="Docker image tag",
             required=True,
+        )
+        optional.add_argument(
+            "--image-pull-secret",
+            metavar="IMAGE_PULL_SECRET",
+            type=str,
+            help="The name of the image pull secret (in a string format) for pulling an image from a private registry",
         )
         optional.add_argument(
             "--replicas",

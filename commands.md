@@ -32,6 +32,10 @@ Control your quick deployment
 ```
 quick [-h] command [options ...] ...
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Available commands:**
 
 * [`context`](#quick-context): Manage quick configuration
@@ -49,6 +53,10 @@ Manage quick configuration
 ```
 quick context [-h] command [options ...] ...
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Available commands:**
 
 * [`create`](#quick-context-create): Create a new context
@@ -64,6 +72,10 @@ Create a new context
 ```
 quick context create [-h] [--host HOST] [--key API-KEY] [--context CONTEXT] [--debug]
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Optional:**
 
 * `--host`: Name of the host (prompted if not given)
@@ -79,6 +91,10 @@ Display a context configuration
 ```
 quick context describe [-h] [--context CONTEXT] [--debug]
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Optional:**
 
 * `--context`: Select context (defaults to current one)
@@ -92,6 +108,10 @@ List all context configurations
 ```
 quick context list [-h] [--debug]
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Optional:**
 
 * `--debug`: Enable debug output
@@ -104,6 +124,10 @@ Activate context
 ```
 quick context activate [-h] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `name`: Name of the context to activate
@@ -121,6 +145,10 @@ Manage topics
 ```
 quick topic [-h] command [options ...] ...
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Available commands:**
 
 * [`create`](#quick-topic-create): Create a new topic
@@ -134,10 +162,14 @@ Create a new topic
 **Usage:**
 
 ```
-quick topic create [-h] -k TYPE -v TYPE [-s SCHEMA] [--immutable] [--retention-time RETENTION_TIME]
-                          [--context CONTEXT] [--debug]
+quick topic create [-h] -k TYPE -v TYPE [-s SCHEMA] [--immutable] [--retention-time RETENTION_TIME] [--point]
+                          [--no-point] [--range-field RANGE_FIELD] [--context CONTEXT] [--debug]
                           NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `topic_name`: The name of the topic
@@ -149,6 +181,9 @@ quick topic create [-h] -k TYPE -v TYPE [-s SCHEMA] [--immutable] [--retention-t
 * `-s, --schema`: The schema of the topic defined by gateway's GraphQL type: gateway.type
 * `--immutable`: An immutable topic does not allow ingesting the same key twice (default: False)
 * `--retention-time`: Retention time of data in the topic in (if not given, the data is kept indefinitely)
+* `--point`: Creates point index in the Mirror
+* `--no-point`: Disables point index in the Mirror
+* `--range-field`: The field name, which the range index should be built on
 * `--context`: Context of quick
 * `--debug`: Enable debug output
 
@@ -160,6 +195,10 @@ Delete a topic
 ```
 quick topic delete [-h] [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `topic_name`: Topic to delete
@@ -177,6 +216,10 @@ List all topics
 ```
 quick topic list [-h] [--context CONTEXT] [--debug]
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Optional:**
 
 * `--context`: Context of quick
@@ -190,6 +233,10 @@ Display information for a topic
 ```
 quick topic describe [-h] [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `topic_name`: The name of the topic.
@@ -208,6 +255,10 @@ Manage gateways
 ```
 quick gateway [-h] command [options ...] ...
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Available commands:**
 
 * [`create`](#quick-gateway-create): Create a gateway
@@ -225,15 +276,19 @@ Create a gateway
 ```
 quick gateway create [-h] [--replicas REPLICAS] [--tag TAG] [-s SCHEMA_FILE] [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `gateway_name`: Name of the gateway
-* `-s, --schema`: Location of the schema file or std in
 
 **Optional:**
 
 * `--replicas`: Number of replicas
 * `--tag`: Docker image tag (defaults to currently installed tag)
+* `-s, --schema`: Location of the schema file or std in
 * `--context`: Context of quick
 * `--debug`: Enable debug output
 
@@ -245,6 +300,10 @@ Delete a gateway
 ```
 quick gateway delete [-h] [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `gateway_name`: Name of the gateway
@@ -262,6 +321,10 @@ Apply a new schema to a gateway
 ```
 quick gateway apply [-h] -f FILE [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `gateway_name`: Name of the gateway
@@ -280,6 +343,10 @@ List all gateways
 ```
 quick gateway list [-h] [--context CONTEXT] [--debug]
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Optional:**
 
 * `--context`: Context of quick
@@ -293,6 +360,10 @@ Display information about a gateway
 ```
 quick gateway describe [-h] [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `gateway_name`: The name of the gateway.
@@ -310,6 +381,10 @@ Display the schema of a gateway in Avro or GraphQL format
 ```
 quick gateway schema [-h] [--avro] [--context CONTEXT] [--debug] NAME TYPE
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `gateway_name`: The name of the gateway.
@@ -330,6 +405,10 @@ Mirrors make topics queryable. With these commands, you can control which topic 
 ```
 quick mirror [-h] command [options ...] ...
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Available commands:**
 
 * [`create`](#quick-mirror-create): Mirror a Kafka topic
@@ -341,8 +420,14 @@ Create a mirror for a topic and make it queryable through a gateway
 **Usage:**
 
 ```
-quick mirror create [-h] [--tag TAG] [--replicas REPLICAS] [--context CONTEXT] [--debug] TOPIC
+quick mirror create [-h] [--tag TAG] [--replicas REPLICAS] [--point] [--no-point] [--range-field RANGE_FIELD]
+                           [--context CONTEXT] [--debug]
+                           TOPIC
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `topic`: Topic to mirror
@@ -351,6 +436,9 @@ quick mirror create [-h] [--tag TAG] [--replicas REPLICAS] [--context CONTEXT] [
 
 * `--tag`: Docker image tag (defaults to currently installed tag)
 * `--replicas`: Number of replicas (default: 1)
+* `--point`: Creates point index in the Mirror
+* `--no-point`: Disables point index in the Mirror
+* `--range-field`: The field name, which the range index should be built on
 * `--context`: Context of quick
 * `--debug`: Enable debug output
 
@@ -362,6 +450,10 @@ Delete a mirror
 ```
 quick mirror delete [-h] [--context CONTEXT] [--debug] TOPIC
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `mirror`: Topic to delete mirror from
@@ -380,6 +472,10 @@ Streams applications are Kafka Streams applications processing your data stream.
 ```
 quick app [-h] command [options ...] ...
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Available commands:**
 
 * [`deploy`](#quick-app-deploy): Deploy a new application
@@ -387,15 +483,19 @@ quick app [-h] command [options ...] ...
 
 ### `quick app deploy`
 Deploy a new application.
-The application must be provided as a Docker image. You can specify the registry.
+The application must be provided as a Docker image. You can specify the registry.You can also deploy the application from a private registry. If you want to do this, you must specify the corresponding image pull secret.
 
 **Usage:**
 
 ```
-quick app deploy [-h] --registry REGISTRY_URL --image IMAGE --tag TAG [--replicas REPLICAS]
-                        [--args [ARG=VALUE [ARG=VALUE ...]]] [--context CONTEXT] [--debug]
+quick app deploy [-h] --registry REGISTRY_URL --image IMAGE --tag TAG [--image-pull-secret IMAGE_PULL_SECRET]
+                        [--replicas REPLICAS] [--args [ARG=VALUE ...]] [--port PORT] [--context CONTEXT] [--debug]
                         NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `application_name`: Name of the application (must be unique)
@@ -405,8 +505,10 @@ quick app deploy [-h] --registry REGISTRY_URL --image IMAGE --tag TAG [--replica
 
 **Optional:**
 
+* `--image-pull-secret`: A secret in a string format for pulling an image from a private registry
 * `--replicas`: Number of replicas
 * `--args`: CLI arguments of the application (broker and schema registry not required)
+* `--port`: The container port of the application
 * `--context`: Context of quick
 * `--debug`: Enable debug output
 
@@ -418,6 +520,10 @@ Delete an application. This stops the running Streams application and removes al
 ```
 quick app delete [-h] [--context CONTEXT] [--debug] NAME
 ```
+**options:**
+
+* `-h, --help`: show this help message and exit
+
 **Required:**
 
 * `application_name`: Name of the application
