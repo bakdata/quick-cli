@@ -46,7 +46,7 @@ class TestMirror(TestCase):
     def test_execute_no_optional(self):
         args = self.parser.parse_args(["mirror", self.COMMAND, self.TOPIC])
         args.func(args)
-        expected_data = MirrorCreationData(self.TOPIC, self.TOPIC, replicas=1, tag=None, point=True, range_field=None)
+        expected_data = MirrorCreationData(self.TOPIC, self.TOPIC, replicas=1, tag=None, range_field=None)
         self.mock_client.create_mirror.assert_called_once_with(mirror_creation_data=expected_data)
 
     def test_execute_with_optional_replicas(self):
