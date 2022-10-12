@@ -85,7 +85,6 @@ jobs:
             ${{ steps.read-config.outputs.content }}
 
       - name: Create tag and push tag
-        if: ${{ success() }}
         run: |
           git tag ${{ steps.release-tag.outputs.tag }}
           git push origin ${{ steps.release-tag.outputs.tag }}
@@ -93,7 +92,6 @@ jobs:
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
-        if: ${{ success() }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -104,7 +102,6 @@ jobs:
           prerelease: false
 
       - name: Build and Publish package to PyPI
-        if: ${{ success() }}
         run: |
           # first build the project then publish to PyPI
           # If the repository is not specified, by default poetry pushes the packages to PyPI

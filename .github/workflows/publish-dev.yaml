@@ -20,8 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # https://github.com/bakdata/ci-templates/blob/v1.2.0/actions/python-setup-poetry/action.yaml
-      - name: Install python and set up Poetry and bump version with poetry
+      - name: Install Python and set up Poetry and bump version with Poetry
         id: bump_version
         uses: bakdata/ci-templates/actions/python-poetry-bump-version@v1.2.0
         with:
@@ -45,7 +44,6 @@ jobs:
         shell: bash
 
       - name: Build and Publish package to TestPyPI
-        if: ${{ success() }}
         run: |
           # set the repository to TestPyPI
           poetry config repositories.testpypi https://test.pypi.org/legacy/
