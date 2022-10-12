@@ -25,7 +25,7 @@ jobs:
         id: bump_version
         uses: bakdata/ci-templates/actions/python-poetry-bump-version@v1.5.2
         with:
-          poetry-version: $${{ env.POETRY_VERSION }}
+          poetry-version: ${{ env.POETRY_VERSION }}
           python-version: ${{ matrix.python-version }}
           release-type: "minor"
 

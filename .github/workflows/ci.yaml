@@ -24,7 +24,7 @@ jobs:
       - name: Install python and set up Poetry
         uses: bakdata/ci-templates/actions/python-setup-poetry@v1.5.2
         with:
-          poetry-version: $${{ env.POETRY_VERSION }}
+          poetry-version: ${{ env.POETRY_VERSION }}
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
