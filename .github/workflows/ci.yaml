@@ -20,9 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # https://github.com/bakdata/ci-templates/tree/main/actions/python-setup-poetry
+      # https://github.com/bakdata/ci-templates/blob/v1.2.0/actions/python-setup-poetry/action.yaml
       - name: Install python and set up Poetry
-        uses: bakdata/ci-templates/actions/python-setup-poetry@v1.5.2
+        uses: bakdata/ci-templates/actions/python-setup-poetry@v1.2.0
         with:
           poetry-version: ${{ env.POETRY_VERSION }}
           python-version: ${{ matrix.python-version }}
