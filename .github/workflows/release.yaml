@@ -21,8 +21,7 @@ jobs:
         with:
           ref: "master"
 
-      # https://github.com/bakdata/ci-templates/blob/v1.2.0/actions/python-setup-poetry/action.yaml
-      - name: Install python and set up Poetry
+      - name: Install Python and set up Poetry
         uses: bakdata/ci-templates/actions/python-setup-poetry@v1.2.0
         with:
           poetry-version: ${{ env.POETRY_VERSION }}
