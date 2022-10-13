@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 env:
-  POETRY_VERSION: "1.0.3"
+  POETRY_VERSION: "1.1.12"
 
 jobs:
   tests:
@@ -32,7 +32,7 @@ jobs:
         id: get_distance_to_tag
         run: |
           # Get the distance from HEAD and save it to the distance variable
-          echo "::set-output name=distance::$(git rev-list HEAD --count)"
+          echo "distance=$(git rev-list HEAD --count)" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Set version with poetry
