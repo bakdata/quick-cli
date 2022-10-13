@@ -3,8 +3,6 @@ name: Upload Python Package to TestPypi
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 env:
   POETRY_VERSION: "1.1.12"
@@ -42,15 +40,13 @@ jobs:
         run: |
           # Update the pyproject.toml version. Versioning format for dev packages: X.Y.Z.devN
           # For more information visit: https://www.python.org/dev/peps/pep-0440/#semantic-versioning
-          echo "dev version is ${{ steps.get_distance_to_tag.outputs.distance }}"
-          echo "end version is ${{ steps.bump_version.outputs.release-tag }}.dev${{ steps.get_distance_to_tag.outputs.distance }}"
           poetry version ${{ steps.bump_version.outputs.release-tag }}.dev${{ steps.get_distance_to_tag.outputs.distance }}
         shell: bash
 
-#      - name: Build and Publish package to TestPyPI
-#        run: |
-#          # set the repository to TestPyPI
-#          poetry config repositories.testpypi https://test.pypi.org/legacy/
-#          # first build the project then publish to TestPyPI
-#          poetry publish --build --repository testpypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }}
-#        shell: bash
+      - name: Build and Publish package to TestPyPI
+        run: |
+          # set the repository to TestPyPI
+          poetry config repositories.testpypi https://test.pypi.org/legacy/
+          # first build the project then publish to TestPyPI
+          poetry publish --build --repository testpypi --username __token__ --password ${{ secrets.TEST_PYPI_TOKEN }}
+        shell: bash

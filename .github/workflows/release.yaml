@@ -37,9 +37,9 @@ jobs:
       - name: Bump version with poetry
         id: release-tag
         run: |
-          echo ::set-output name=oldTag::$(poetry version -s)
+          echo "oldTag=$(poetry version -s)" >> $GITHUB_OUTPUT
           poetry version ${{ github.event.inputs.scope }}
-          echo ::set-output name=tag::$(poetry version -s)
+          echo "tag=$(poetry version -s)" >> $GITHUB_OUTPUT
         shell: bash
 
       # For more information to create a commit with GitHub action bot go to:
@@ -60,7 +60,7 @@ jobs:
       - name: Read changelog config
         id: read-config
         run: |
-          echo ::set-output name=content::$(cat ./.github/changelog-config.json)
+          echo "content=$(cat ./.github/changelog-config.json)" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Generate Changelog
