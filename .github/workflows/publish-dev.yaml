@@ -40,7 +40,7 @@ jobs:
         run: |
           # Update the pyproject.toml version. Versioning format for dev packages: X.Y.Z.devN
           # For more information visit: https://www.python.org/dev/peps/pep-0440/#semantic-versioning
-          poetry version ${{ steps.get_current_version.outputs.current_version }}.dev${{ steps.get_distance_to_tag.outputs.distance }}
+          poetry version ${{ steps.bump_version.outputs.release-tag }}.dev${{ steps.get_distance_to_tag.outputs.distance }}
         shell: bash
 
       - name: Build and Publish package to TestPyPI
