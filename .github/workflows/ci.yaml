@@ -31,7 +31,7 @@ jobs:
 
       - name: Print config
         run: |
-          echo ${{ steps. read-config.outputs.content }}
+          echo "${{ steps.read-config.outputs.content }}"
         shell: bash
 
 #      - name: Install Python and set up Poetry
