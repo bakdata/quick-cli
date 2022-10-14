@@ -60,7 +60,7 @@ jobs:
       - name: Read changelog config
         id: read-config
         run: |
-          echo "content=$(cat ./.github/changelog-config.json)" >> $GITHUB_OUTPUT
+          echo "content=$(cat ./.github/changelog-config.json)<<EOF" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Generate Changelog
