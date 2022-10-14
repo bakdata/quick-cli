@@ -51,12 +51,6 @@ jobs:
           git commit -m "Update version to ${{ steps.release-tag.outputs.tag }}" -a
         shell: bash
 
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: refs/heads/master
-
       - name: Create tag and push tag
         run: |
           git tag ${{ steps.release-tag.outputs.tag }}
@@ -91,6 +85,12 @@ jobs:
           verbose: "true"
           addSections: |
             ${{ steps.read-config.outputs.content }}
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: refs/heads/master
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
