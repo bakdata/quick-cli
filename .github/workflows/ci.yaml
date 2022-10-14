@@ -23,7 +23,10 @@ jobs:
       - name: Read changelog config
         id: read-config
         run: |
-          echo "content=$(cat ./.github/changelog-config.json)<<EOF" >> $GITHUB_OUTPUT
+          CONTENT=$(cat ./.github/changelog-config.json)
+          echo "CONTENT<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Print config
