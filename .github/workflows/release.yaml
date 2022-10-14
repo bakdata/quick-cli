@@ -57,6 +57,12 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: refs/heads/master
 
+      - name: Create tag and push tag
+        run: |
+          git tag ${{ steps.release-tag.outputs.tag }}
+          git push origin ${{ steps.release-tag.outputs.tag }}
+        shell: bash
+
       - name: Read changelog config
         id: read-config
         run: |
@@ -85,12 +91,6 @@ jobs:
           verbose: "true"
           addSections: |
             ${{ steps.read-config.outputs.content }}
-
-      - name: Create tag and push tag
-        run: |
-          git tag ${{ steps.release-tag.outputs.tag }}
-          git push origin ${{ steps.release-tag.outputs.tag }}
-        shell: bash
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
