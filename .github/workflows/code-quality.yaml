@@ -8,8 +8,6 @@ on:
     branches: [ master ]
     paths-ignore:
       - 'docs/**'
-      -
-
 
 jobs:
   pre-commit:
