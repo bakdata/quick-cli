@@ -9,10 +9,7 @@ on:
     paths-ignore:
       - 'docs/**'
       -
-#          CONTENT=$(cat ./.github/changelog-config.json)
-#          echo "CONTENT<<EOF" >> $GITHUB_OUTPUT
-#          echo "$CONTENT" >> $GITHUB_OUTPUT
-#          echo "EOF" >> $GITHUB_OUTPUT
+
 
 jobs:
   pre-commit:
@@ -25,7 +22,11 @@ jobs:
 
       - name: Read changelog config
         id: read-config
-        run: echo ::set-output name=content::$(cat ./.github/changelog-config.json)
+        run: |
+          CONTENT=$(cat ./.github/changelog-config.json)
+          echo "CONTENT<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Generate Changelog
