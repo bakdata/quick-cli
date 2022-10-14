@@ -1,4 +1,4 @@
-name: Upload Python Package to Pypi
+name: Release to Pypi
 
 on:
   workflow_dispatch:
@@ -52,7 +52,7 @@ jobs:
         shell: bash
 
       - name: Push changes
-        uses: ad-m/github-push-action@0.6.0
+        uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: refs/heads/master
