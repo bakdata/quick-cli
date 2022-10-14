@@ -28,6 +28,22 @@ jobs:
         run: echo ::set-output name=content::$(cat ./.github/changelog-config.json)
         shell: bash
 
-      - name: Print config
-        run: echo "${{ steps.read-config.outputs.content }}"
-        shell: bash
+      - name: Generate Changelog
+        id: generate-release-changelog
+        uses: heinrichreimer/github-changelog-generator-action@v2.2
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          sinceTag: "${{ steps.release-tag.outputs.oldTag }}"
+          output: "changes.md"
+          stripGeneratorNotice: "true"
+          issues: "true"
+          unreleased: "true"
+          pullRequests: "false"
+          compareLink: "true"
+          issuesWoLabels: "false"
+          futureRelease: "${{ steps.release-tag.outputs.tag }}"
+          issuesLabel: "**Miscellaneous:**"
+          httpCache: "true"
+          verbose: "true"
+          addSections: |
+            ${{ steps.read-config.outputs.content }}
