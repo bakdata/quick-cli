@@ -36,19 +36,17 @@ class TopicCreationData(object):
         'write_type': 'TopicWriteType',
         'value_schema': 'GatewaySchema',
         'key_schema': 'GatewaySchema',
-        'retention_time': 'str',
-        'range_field': 'str'
+        'mirror_arguments': 'MirrorArguments'
     }
 
     attribute_map = {
         'write_type': 'writeType',
         'value_schema': 'valueSchema',
         'key_schema': 'keySchema',
-        'retention_time': 'retentionTime',
-        'range_field': 'rangeField'
+        'mirror_arguments': 'mirrorArguments'
     }
 
-    def __init__(self, write_type=None, value_schema=None, key_schema=None, retention_time=None, range_field=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, write_type=None, value_schema=None, key_schema=None, mirror_arguments=None, local_vars_configuration=None):  # noqa: E501
         """TopicCreationData - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -57,8 +55,7 @@ class TopicCreationData(object):
         self._write_type = None
         self._value_schema = None
         self._key_schema = None
-        self._retention_time = None
-        self._range_field = None
+        self._mirror_arguments = None
         self.discriminator = None
 
         if write_type is not None:
@@ -67,10 +64,8 @@ class TopicCreationData(object):
             self.value_schema = value_schema
         if key_schema is not None:
             self.key_schema = key_schema
-        if retention_time is not None:
-            self.retention_time = retention_time
-        if range_field is not None:
-            self.range_field = range_field
+        if mirror_arguments is not None:
+            self.mirror_arguments = mirror_arguments
 
     @property
     def write_type(self):
@@ -136,46 +131,25 @@ class TopicCreationData(object):
         self._key_schema = key_schema
 
     @property
-    def retention_time(self):
-        """Gets the retention_time of this TopicCreationData.  # noqa: E501
+    def mirror_arguments(self):
+        """Gets the mirror_arguments of this TopicCreationData.  # noqa: E501
 
 
-        :return: The retention_time of this TopicCreationData.  # noqa: E501
-        :rtype: str
+        :return: The mirror_arguments of this TopicCreationData.  # noqa: E501
+        :rtype: MirrorArguments
         """
-        return self._retention_time
+        return self._mirror_arguments
 
-    @retention_time.setter
-    def retention_time(self, retention_time):
-        """Sets the retention_time of this TopicCreationData.
-
-
-        :param retention_time: The retention_time of this TopicCreationData.  # noqa: E501
-        :type: str
-        """
-
-        self._retention_time = retention_time
-
-    @property
-    def range_field(self):
-        """Gets the range_field of this TopicCreationData.  # noqa: E501
+    @mirror_arguments.setter
+    def mirror_arguments(self, mirror_arguments):
+        """Sets the mirror_arguments of this TopicCreationData.
 
 
-        :return: The range_field of this TopicCreationData.  # noqa: E501
-        :rtype: str
-        """
-        return self._range_field
-
-    @range_field.setter
-    def range_field(self, range_field):
-        """Sets the range_field of this TopicCreationData.
-
-
-        :param range_field: The range_field of this TopicCreationData.  # noqa: E501
-        :type: str
+        :param mirror_arguments: The mirror_arguments of this TopicCreationData.  # noqa: E501
+        :type: MirrorArguments
         """
 
-        self._range_field = range_field
+        self._mirror_arguments = mirror_arguments
 
     def to_dict(self):
         """Returns the model properties as a dict"""

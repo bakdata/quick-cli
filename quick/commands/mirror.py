@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 
 from quick_client import ApiException
+from quick_client import MirrorArguments
 from quick_client import MirrorCreationData
 
 from quick.commands.base import ArgumentGroup
@@ -14,12 +15,15 @@ class CreateMirror(ManagerCommand):
     description = "Create a mirror for a topic and make it queryable through a gateway"
 
     def execute(self):
+        arguments = MirrorArguments(
+            range_field=self.args.range_field, range_key=self.args.range_key, retention_time=self.args.retention_time
+        )
         mirror_creation_data = MirrorCreationData(
             name=self.args.topic,
             topic_name=self.args.topic,
             replicas=self.args.replicas,
             tag=self.args.tag,
-            range_field=self.args.range_field,
+            mirror_arguments=arguments,
         )
         self.client.create_mirror(mirror_creation_data=mirror_creation_data)
         print(f"Create mirror for topic {self.args.topic} (this may take a few seconds)")
@@ -45,10 +49,21 @@ class CreateMirror(ManagerCommand):
             default=1,
         )
         optional.add_argument(
+            "--retention-time",
+            type=str,
+            help="Retention time of data in the topic in (if not given, the data is kept indefinitely)",
+        )
+        optional.add_argument(
             "--range-field",
             type=str,
             dest="range_field",
             help="The field name, which the range index should be built on",
+        )
+        optional.add_argument(
+            "--range-key",
+            type=str,
+            dest="range_key",
+            help="The key name, which the range index should be built on",
         )
 
 

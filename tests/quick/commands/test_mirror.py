@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
 
+from quick_client import MirrorArguments
 from quick_client import MirrorCreationData
 
 from quick.commands.mirror import CreateMirror
@@ -46,19 +47,25 @@ class TestMirror(TestCase):
     def test_execute_no_optional(self):
         args = self.parser.parse_args(["mirror", self.COMMAND, self.TOPIC])
         args.func(args)
-        expected_data = MirrorCreationData(self.TOPIC, self.TOPIC, replicas=1, tag=None, range_field=None)
+        expected_data = MirrorCreationData(
+            self.TOPIC, self.TOPIC, replicas=1, tag=None, mirror_arguments=MirrorArguments()
+        )
         self.mock_client.create_mirror.assert_called_once_with(mirror_creation_data=expected_data)
 
     def test_execute_with_optional_replicas(self):
         args = self.parser.parse_args(["mirror", self.COMMAND, self.TOPIC, self.OPTIONAL[0], str(self.REPLICAS)])
         args.func(args)
-        expected_data = MirrorCreationData(self.TOPIC, self.TOPIC, replicas=self.REPLICAS, tag=None)
+        expected_data = MirrorCreationData(
+            self.TOPIC, self.TOPIC, replicas=self.REPLICAS, tag=None, mirror_arguments=MirrorArguments()
+        )
         self.mock_client.create_mirror.assert_called_once_with(mirror_creation_data=expected_data)
 
     def test_execute_with_optional_version(self):
         args = self.parser.parse_args(["mirror", self.COMMAND, self.TOPIC, self.OPTIONAL[1], self.VERSION])
         args.func(args)
-        expected_data = MirrorCreationData(self.TOPIC, self.TOPIC, replicas=1, tag=self.VERSION)
+        expected_data = MirrorCreationData(
+            self.TOPIC, self.TOPIC, replicas=1, tag=self.VERSION, mirror_arguments=MirrorArguments()
+        )
         self.mock_client.create_mirror.assert_called_once_with(mirror_creation_data=expected_data)
 
     def test_execute_with_optionals(self):
@@ -76,7 +83,8 @@ class TestMirror(TestCase):
             ]
         )
         args.func(args)
+        mirror_arguments = MirrorArguments(range_field=self.RANGE_FILED)
         expected_data = MirrorCreationData(
-            self.TOPIC, self.TOPIC, replicas=self.REPLICAS, tag=self.VERSION, range_field=self.RANGE_FILED
+            self.TOPIC, self.TOPIC, replicas=self.REPLICAS, tag=self.VERSION, mirror_arguments=mirror_arguments
         )
         self.mock_client.create_mirror.assert_called_once_with(mirror_creation_data=expected_data)

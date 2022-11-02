@@ -4,6 +4,7 @@ import isodate
 
 from quick_client import ApiException
 from quick_client import GatewaySchema
+from quick_client import MirrorArguments
 from quick_client.models import QuickTopicType
 from quick_client.models import TopicCreationData
 from quick_client.models import TopicWriteType
@@ -49,14 +50,20 @@ class CreateTopic(ManagerCommand):
             creation_data.value_schema = GatewaySchema(splits[0], splits[1])
 
         if self.args.retention_time is not None and self.args.range_field is not None:
-            self.parser.error("The --range-field option must not be specified" + " when --retention-time is set")
+            self.parser.error("The --range-field option must not be specified when --retention-time is set")
+        if self.args.range_key is not None and self.args.range_field is None:
+            self.parser.error("The --range-key can be set only when a --range-field is set")
+
+        mirror_arguments = MirrorArguments()
         if self.args.retention_time is not None:
             # check for correct formatting
             isodate.parse_duration(self.args.retention_time)
-            creation_data.retention_time = self.args.retention_time
+            mirror_arguments.retention_time = self.args.retention_time
 
-        creation_data.range_field = self.args.range_field
+        mirror_arguments.range_field = self.args.range_field
+        mirror_arguments.range_key = self.args.range_key
 
+        creation_data.mirror_arguments = mirror_arguments
         params["topic_creation_data"] = creation_data
         self.client.create_new_topic(self.args.topic_name, **params)
         print(f"Created new topic {self.args.topic_name}")
@@ -112,6 +119,12 @@ class CreateTopic(ManagerCommand):
             type=str,
             dest="range_field",
             help="The field name, which the range index should be built on",
+        )
+        optional.add_argument(
+            "--range-key",
+            type=str,
+            dest="range_key",
+            help="The key name, which the range index should be built on",
         )
 
 
