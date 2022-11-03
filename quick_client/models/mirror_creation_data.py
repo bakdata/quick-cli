@@ -37,8 +37,7 @@ class MirrorCreationData(object):
         'topic_name': 'str',
         'replicas': 'int',
         'tag': 'str',
-        'retention_time': 'str',
-        'range_field': 'str'
+        'mirror_arguments': 'MirrorArguments'
     }
 
     attribute_map = {
@@ -46,11 +45,10 @@ class MirrorCreationData(object):
         'topic_name': 'topicName',
         'replicas': 'replicas',
         'tag': 'tag',
-        'retention_time': 'retentionTime',
-        'range_field': 'rangeField'
+        'mirror_arguments': 'mirrorArguments'
     }
 
-    def __init__(self, name=None, topic_name=None, replicas=None, tag=None, retention_time=None, range_field=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, name=None, topic_name=None, replicas=None, tag=None, mirror_arguments=None, local_vars_configuration=None):  # noqa: E501
         """MirrorCreationData - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -60,8 +58,7 @@ class MirrorCreationData(object):
         self._topic_name = None
         self._replicas = None
         self._tag = None
-        self._retention_time = None
-        self._range_field = None
+        self._mirror_arguments = None
         self.discriminator = None
 
         self.name = name
@@ -70,10 +67,8 @@ class MirrorCreationData(object):
             self.replicas = replicas
         if tag is not None:
             self.tag = tag
-        if retention_time is not None:
-            self.retention_time = retention_time
-        if range_field is not None:
-            self.range_field = range_field
+        if mirror_arguments is not None:
+            self.mirror_arguments = mirror_arguments
 
     @property
     def name(self):
@@ -164,46 +159,25 @@ class MirrorCreationData(object):
         self._tag = tag
 
     @property
-    def retention_time(self):
-        """Gets the retention_time of this MirrorCreationData.  # noqa: E501
+    def mirror_arguments(self):
+        """Gets the mirror_arguments of this MirrorCreationData.  # noqa: E501
 
 
-        :return: The retention_time of this MirrorCreationData.  # noqa: E501
-        :rtype: str
+        :return: The mirror_arguments of this MirrorCreationData.  # noqa: E501
+        :rtype: MirrorArguments
         """
-        return self._retention_time
+        return self._mirror_arguments
 
-    @retention_time.setter
-    def retention_time(self, retention_time):
-        """Sets the retention_time of this MirrorCreationData.
-
-
-        :param retention_time: The retention_time of this MirrorCreationData.  # noqa: E501
-        :type: str
-        """
-
-        self._retention_time = retention_time
-
-    @property
-    def range_field(self):
-        """Gets the range_field of this MirrorCreationData.  # noqa: E501
+    @mirror_arguments.setter
+    def mirror_arguments(self, mirror_arguments):
+        """Sets the mirror_arguments of this MirrorCreationData.
 
 
-        :return: The range_field of this MirrorCreationData.  # noqa: E501
-        :rtype: str
-        """
-        return self._range_field
-
-    @range_field.setter
-    def range_field(self, range_field):
-        """Sets the range_field of this MirrorCreationData.
-
-
-        :param range_field: The range_field of this MirrorCreationData.  # noqa: E501
-        :type: str
+        :param mirror_arguments: The mirror_arguments of this MirrorCreationData.  # noqa: E501
+        :type: MirrorArguments
         """
 
-        self._range_field = range_field
+        self._mirror_arguments = mirror_arguments
 
     def to_dict(self):
         """Returns the model properties as a dict"""

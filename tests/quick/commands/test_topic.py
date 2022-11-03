@@ -6,6 +6,7 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 from quick_client import GatewaySchema
+from quick_client import MirrorArguments
 from quick_client import TopicCreationData
 from quick_client import TopicData
 from quick_client import TopicWriteType
@@ -44,7 +45,9 @@ class TestTopic(TestCase):
         check_correct_parser_creation(CreateTopic)
 
     def test_execute(self):
-        creation_data = TopicCreationData(write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA)
+        creation_data = TopicCreationData(
+            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, mirror_arguments=MirrorArguments()
+        )
 
         args = self.parser.parse_args(
             [
@@ -69,7 +72,9 @@ class TestTopic(TestCase):
         )
 
     def test_execute_immutable(self):
-        creation_data = TopicCreationData(write_type=TopicWriteType.IMMUTABLE, value_schema=self.GATEWAY_SCHEMA)
+        creation_data = TopicCreationData(
+            write_type=TopicWriteType.IMMUTABLE, value_schema=self.GATEWAY_SCHEMA, mirror_arguments=MirrorArguments()
+        )
 
         args = self.parser.parse_args(
             [
@@ -99,7 +104,7 @@ class TestTopic(TestCase):
         creation_data = TopicCreationData(
             write_type=TopicWriteType.MUTABLE,
             value_schema=self.GATEWAY_SCHEMA,
-            retention_time="PT5M",
+            mirror_arguments=MirrorArguments(retention_time="PT5M"),
         )
         args = self.parser.parse_args(
             [
@@ -132,9 +137,11 @@ class TestTopic(TestCase):
         self.assertEqual(cm.exception.code, 2)
         self.assertTrue("Error: the following arguments are required: -k/--key-type, -v/--value-type" in f.getvalue())
 
-    def test_execute_range(self):
+    def test_execute_range_field(self):
         creation_data = TopicCreationData(
-            write_type=TopicWriteType.MUTABLE, value_schema=self.GATEWAY_SCHEMA, range_field="testField"
+            write_type=TopicWriteType.MUTABLE,
+            value_schema=self.GATEWAY_SCHEMA,
+            mirror_arguments=MirrorArguments(range_field="testField"),
         )
 
         args = self.parser.parse_args(
@@ -150,6 +157,36 @@ class TestTopic(TestCase):
                 self.SCHEMA,
                 "--range-field",
                 "testField",
+            ]
+        )
+        args.func(args)
+
+        self.mock_client.create_new_topic.assert_called_once_with(
+            "test-topic", key_type=self.KEY_TYPE, topic_creation_data=creation_data, value_type="schema"
+        )
+
+    def test_execute_range_field_and_range_key(self):
+        creation_data = TopicCreationData(
+            write_type=TopicWriteType.MUTABLE,
+            value_schema=self.GATEWAY_SCHEMA,
+            mirror_arguments=MirrorArguments(range_field="testField", range_key="testKey"),
+        )
+
+        args = self.parser.parse_args(
+            [
+                "topic",
+                self.COMMAND,
+                self.NAME,
+                self.KEY_CMD,
+                self.KEY_TYPE,
+                self.VALUE_CMD,
+                self.VALUE_TYPE,
+                self.SCHEMA_CMD,
+                self.SCHEMA,
+                "--range-field",
+                "testField",
+                "--range-key",
+                "testKey",
             ]
         )
         args.func(args)
@@ -181,6 +218,28 @@ class TestTopic(TestCase):
             args.func(args)
         self.assertEqual(cm.exception.code, 2)
         self.assertTrue("The --range-field option must not be specified when --retention-time is set" in f.getvalue())
+
+    def test_execute_with__range_key_and_no_range_field(self):
+        args = self.parser.parse_args(
+            [
+                "topic",
+                self.COMMAND,
+                self.NAME,
+                self.KEY_CMD,
+                self.KEY_TYPE,
+                self.VALUE_CMD,
+                self.VALUE_TYPE,
+                self.SCHEMA_CMD,
+                self.SCHEMA,
+                "--range-key",
+                "testKey",
+            ]
+        )
+        f = io.StringIO()
+        with self.assertRaises(SystemExit) as cm, contextlib.redirect_stderr(f):
+            args.func(args)
+        self.assertEqual(cm.exception.code, 2)
+        self.assertTrue("The --range-key can be set only when a --range-field is set" in f.getvalue())
 
 
 class TestDelete(TestCase):

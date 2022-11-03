@@ -104,6 +104,7 @@ Class | Method | HTTP request | Description
  - [GatewayCreationData](quick_client/docs/GatewayCreationData.md)
  - [GatewayDescription](quick_client/docs/GatewayDescription.md)
  - [GatewaySchema](quick_client/docs/GatewaySchema.md)
+ - [MirrorArguments](quick_client/docs/MirrorArguments.md)
  - [MirrorCreationData](quick_client/docs/MirrorCreationData.md)
  - [QuickTopicType](quick_client/docs/QuickTopicType.md)
  - [SchemaData](quick_client/docs/SchemaData.md)

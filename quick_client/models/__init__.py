@@ -20,6 +20,7 @@ from quick_client.models.error_message import ErrorMessage
 from quick_client.models.gateway_creation_data import GatewayCreationData
 from quick_client.models.gateway_description import GatewayDescription
 from quick_client.models.gateway_schema import GatewaySchema
+from quick_client.models.mirror_arguments import MirrorArguments
 from quick_client.models.mirror_creation_data import MirrorCreationData
 from quick_client.models.quick_topic_type import QuickTopicType
 from quick_client.models.schema_data import SchemaData
