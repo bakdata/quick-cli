@@ -19,7 +19,7 @@ class QuickConfig:
         self,
         config_dir: str = ".config",
         config_file_name: str = "quick.conf",
-        config_path: Path = None,
+        config_path: Optional[Path] = None,
     ):
         self.config_path = config_path or self.__config_file_path(config_dir, config_file_name)
         self._config: Optional[Dict] = None
@@ -42,13 +42,13 @@ class QuickConfig:
     def get_current_context(self) -> str:
         return self.config[CURRENT_CONTEXT]
 
-    def get_host(self, context: str = None) -> str:
+    def get_host(self, context: Optional[str] = None) -> str:
         return self.__get_value(HOST, context)
 
-    def get_api_key(self, context: str = None) -> str:
+    def get_api_key(self, context: Optional[str] = None) -> str:
         return self.__get_value(API_KEY, context)
 
-    def get_current_context_config(self, context_name: str = None) -> Dict:
+    def get_current_context_config(self, context_name: Optional[str] = None) -> Dict:
         try:
             context_name = context_name or self.get_current_context()
             return self.config[CONTEXTS][context_name]
@@ -70,10 +70,10 @@ class QuickConfig:
             }
         self.__update_config()
 
-    def set_host(self, host: str, context: str = None):
+    def set_host(self, host: str, context: Optional[str] = None):
         self.__set_value(HOST, self.__prepare_host(host), context)
 
-    def set_api_key(self, api_key: str, context: str = None):
+    def set_api_key(self, api_key: str, context: Optional[str] = None):
         self.__set_value(API_KEY, api_key, context)
 
     def set_current_context(self, context: str):
@@ -94,14 +94,14 @@ class QuickConfig:
             host = host + "/manager"
         return host
 
-    def __set_value(self, key: str, value: str, context: str = None):
+    def __set_value(self, key: str, value: str, context: Optional[str] = None):
         if context is None:
             context = self.config[CURRENT_CONTEXT]
 
         self.config[CONTEXTS][context][key] = value
         self.__update_config()
 
-    def __get_value(self, key: str, context: str = None) -> str:
+    def __get_value(self, key: str, context: Optional[str] = None) -> str:
         if context is None:
             context = self.get_current_context()
 

@@ -61,7 +61,6 @@ class Command(Parsable, ABC):
 
     def __init__(self, config: Optional[QuickConfig] = None):
         self.config = config
-        self.parser: Optional[ArgumentParser] = None
 
     def __call__(self, args: Namespace, **kwargs):
         self.args = args
@@ -75,17 +74,17 @@ class Command(Parsable, ABC):
 
     def create_sub_parser(self, parent: SubParserAction):
         self.description = self.description or self.help
-        self.parser = parent.add_parser(
+        parser = parent.add_parser(
             self.name,
             description=self.description,
             help=self.help,
             formatter_class=QuickHelpFormatter,
         )
-        required = self.parser.add_argument_group("Required")
-        optional = self.parser.add_argument_group("Optional")
-        self.add_args(self.parser, required, optional)
+        required = parser.add_argument_group("Required")
+        optional = parser.add_argument_group("Optional")
+        self.add_args(parser, required, optional)
         self.add_common_args(optional)
-        self.parser.set_defaults(func=self)
+        parser.set_defaults(func=self)
 
     @abstractmethod
     def add_args(self, parser: ArgumentParser, required: ArgumentGroup, optional: ArgumentGroup):

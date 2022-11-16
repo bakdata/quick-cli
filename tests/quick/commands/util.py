@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from typing import Iterable
+from typing import Optional
 from typing import Tuple
 from typing import Type
 from unittest.mock import Mock
@@ -25,7 +26,7 @@ def check_correct_parser_creation(command: Type[Command]):
 
 
 def create_command_in_hierarchy(
-    parsables: Iterable[Type[Parsable]], client: Mock = None, config: QuickConfig = None
+    parsables: Iterable[Type[Parsable]], client: Optional[Mock] = None, config: Optional[QuickConfig] = None
 ) -> Tuple[ArgumentParser, Parsable]:
     parser = QuickArgParser(
         description="Control your quick deployment.",
@@ -43,7 +44,7 @@ def create_command_in_hierarchy(
             group = parent.add_parser(
                 parsable.name,
                 description=description,
-                help=help,
+                help=parsable.help,
                 formatter_class=QuickHelpFormatter,
             )
             parent = group.add_subparsers(title="Available commands", metavar="command [options ...]")
