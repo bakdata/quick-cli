@@ -85,6 +85,7 @@ class Command(Parsable, ABC):
         self.add_args(parser, required, optional)
         self.add_common_args(optional)
         parser.set_defaults(func=self)
+        self.parser = parser
 
     @abstractmethod
     def add_args(self, parser: ArgumentParser, required: ArgumentGroup, optional: ArgumentGroup):
