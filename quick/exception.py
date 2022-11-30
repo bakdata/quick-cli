@@ -1,6 +1,7 @@
 import json
 
 from http import HTTPStatus
+from typing import Optional
 
 from quick_client import ApiException
 from quick_client import ErrorMessage
@@ -51,7 +52,7 @@ class ConfigException(Exception):
         super().__init__(self.message)
 
 
-def handle_error(exception: ApiException, message: str = None):
+def handle_error(exception: ApiException, message: Optional[str] = None):
     status_code = exception.status
     json_body = json.loads(exception.body)
     error_message = ErrorMessage(
