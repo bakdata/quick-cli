@@ -3,11 +3,11 @@ name: Code Quality
 on:
   pull_request:
     paths-ignore:
-      - 'docs/**'
+      - "docs/**"
   push:
-    branches: [ master ]
+    branches: [master]
     paths-ignore:
-      - 'docs/**'
+      - "docs/**"
 
 jobs:
   pre-commit:
@@ -16,4 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
       - uses: pre-commit/action@v2.0.0
