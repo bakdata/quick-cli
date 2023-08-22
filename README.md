@@ -4,6 +4,9 @@
 ![Code Quality](https://github.com/bakdata/quick-cli/workflows/Code%20Quality/badge.svg)
 [![PyPI Version](https://img.shields.io/pypi/v/quick-cli?color=blue&label=PyPi%20Version)](https://pypi.org/project/quick-cli/)
 
+> [!WARNING]
+> Quick's CLI is deprecated and no longer actively maintained.
+> Visit our [user guide](https://bakdata.github.io/quick/0.8/user/) for more information.
 
 The Quick CLI lets you manage your Quick instance.
 For more information on how to work with it, see our [user guide](https://bakdata.github.io/quick/dev/user/).
@@ -11,6 +14,7 @@ For more information on how to work with it, see our [user guide](https://bakdat
 ## Set up
 
 The CLI is a Python project and you can install via pip:
+
 ```shell
 pip install quick-cli
 ```
